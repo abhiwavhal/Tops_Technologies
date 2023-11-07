@@ -42,8 +42,15 @@ from employees;
 
 -- 8) Display the employee's name, department id who have the first name same as another
 -- employee in the same department
-
-
+select e1.first_name, e1.Department_id
+from employees as e1
+where e1.first_name IN (
+    select first_name
+    from employees as e2
+    where e1.Department_id = e2.Department_id
+    group by first_name
+    having COUNT(*) > 1
+);
 -- 9) Display the sum of salaries of the employees working under each Manager.
 select sum(salary),manager_id from employees
 group by manager_id;
